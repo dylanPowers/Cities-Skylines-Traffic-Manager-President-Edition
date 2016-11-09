@@ -112,8 +112,8 @@ namespace TrafficManager.State {
 
 		public static bool[] debugSwitches = {
 			false,
-			true,
-			true,
+			false,
+			false,
 			false,
 			false,
 			false
@@ -132,7 +132,7 @@ namespace TrafficManager.State {
 			0f, // 9: debug value (lane density positive update smoothing)
 			15f, // 10: debug value (maximum incoming vehicle distance to junction for priority signs)
 			2.5f, // 11: debug value (> 1 lane changing cost factor)
-			0.75f, // 12: debug value (speed-to-density balance factor, 1 = only speed is considered, 0 = only density is considered)
+			0.75f, // 12: debug value (speed-to-density balance factor, 1 = only speed is considered, 0 = both speed and density are considered)
 			0f, // 13: -- unused --
 			512f, // 14: debug value (parking space search radius; used if pocket car spawning is disabled)
 			10f, // 15: debug value (maximum junction approach time for priority signs)
@@ -145,8 +145,10 @@ namespace TrafficManager.State {
 			2f, // 22: debug value (lane density negative update smoothing)
 			10f, // 23: debug value (lane density random interval)
 			10f, // 24: debug value (lane speed random interval)
-			25f, // 25: maximum penalty for heavy vehicles driving on an inner lane (in %)
-			10000f // 26: maximum number of parking attempts for passenger cars
+			50f, // 25: maximum penalty for heavy vehicles driving on an inner lane (in %)
+			10000f, // 26: maximum number of parking attempts for passenger cars
+			10f,
+            1f
 		};
 
 		public static bool prioritySignsEnabled = true;
@@ -160,8 +162,8 @@ namespace TrafficManager.State {
 			get { return menuRebuildRequired; }
 			private set {
 				menuRebuildRequired = value;
-				if (LoadingExtension.Instance != null && LoadingExtension.Instance.UI != null)
-					LoadingExtension.Instance.UI.Close();
+				if (LoadingExtension.Instance != null && LoadingExtension.Instance.BaseUI != null)
+					LoadingExtension.Instance.BaseUI.Close();
 			}
 		}
 

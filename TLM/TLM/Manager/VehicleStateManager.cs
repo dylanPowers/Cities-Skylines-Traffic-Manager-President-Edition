@@ -129,7 +129,7 @@ namespace TrafficManager.Manager {
 			ushort? speed = logSpeed ? (ushort?)Mathf.RoundToInt(vehicleData.GetLastFrameData().m_velocity.magnitude) : null;
 
 			state.ProcessCurrentPathPosition(ref vehicleData, delegate (ref PathUnit.Position pos) {
-				CustomRoadAI.AddTraffic(pos.m_segment, pos.m_lane, length, speed);
+				CustomRoadAI.AddTraffic(pos.m_segment, Singleton<NetManager>.instance.m_segments.m_buffer[pos.m_segment].Info.m_lanes[pos.m_lane].m_finalDirection, length, speed);
 			});
 #if TRACE
 			Singleton<CodeProfiler>.instance.Stop("VehicleStateManager.LogTraffic");
@@ -147,7 +147,8 @@ namespace TrafficManager.Manager {
 			state.VehicleType = ExtVehicleType.None;
 			ExtCitizenInstance driverExtInstance = state.GetDriverExtInstance();
 			if (driverExtInstance != null) {
-				driverExtInstance.FailedParkingAttempts = 0;
+				//driverExtInstance.FailedParkingAttempts = 0;
+				driverExtInstance.Reset();
 				state.DriverInstanceId = 0;
 			}
 #if USEPATHWAITCOUNTER
